@@ -33,14 +33,6 @@
             top: 10vh;
             font-size: 1.5rem;
         }
-        .fade-in {
-            animation: fadeIn 2s forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
@@ -55,8 +47,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const introText = document.getElementById('intro-text');
-            const countButton = document.getElementById('count-button');
-
+            
             setTimeout(() => {
                 introText.classList.add('animated');
             }, 2000);
@@ -64,10 +55,6 @@
             setTimeout(() => {
                 introText.textContent = "rayden codes randomly";
             }, 3500);
-
-            setTimeout(() => {
-                countButton.parentElement.classList.add('fade-in');
-            }, 4000);
         });
     </script>
 </body>
