@@ -14,6 +14,7 @@
             background-color: #0b0c10;
             font-family: 'Inter', sans-serif;
             overflow: hidden;
+            position: relative;
         }
 
         .river-container {
@@ -46,7 +47,6 @@
             animation: riverFlow 10s linear infinite;
         }
 
-        
         .river::before {
             content: '';
             position: absolute;
@@ -78,9 +78,30 @@
                 background-position: -150px 0, -100px 50px;
             }
         }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #66fcf1;
+            border: 2px solid #66fcf1;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #66fcf1;
+            color: #0b0c10;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.7);
+        }
     </style>
 </head>
 <body>
+    <button class="back-button" onclick="window.location.href='index.html'">to main screen</button>
     <div class="river-container">
         <div class="river"></div>
     </div>
