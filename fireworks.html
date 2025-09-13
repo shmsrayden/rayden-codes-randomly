@@ -28,12 +28,13 @@
             z-index: 10;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.44/Tone.js"></script>
 </head>
 <body>
 
     <div id="controls" class="flex flex-col items-center">
         <h1 class="text-3xl font-bold text-white mb-2">workfirework</h1>
-        <p class="text-sm text-gray-400">click to launch fireworks!!1!1!1!</p>
+        <p class="text-sm text-gray-400">click to launch fireworks!!!!1!</p>
     </div>
 
     <div class="absolute top-4 right-4 z-20">
@@ -48,6 +49,27 @@
             const ctx = canvas.getContext('2d');
             const fireworks = [];
             let particleCount = 150;
+            let isStarted = false;
+
+            const fireworkLaunchSynth = new Tone.Synth({
+                oscillator: { type: "sawtooth" },
+                envelope: {
+                    attack: 0.1,
+                    decay: 0.2,
+                    sustain: 0,
+                    release: 0.5
+                }
+            }).toDestination();
+
+            const fireworkExplosionSynth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: "sine" },
+                envelope: {
+                    attack: 0.01,
+                    decay: 0.1,
+                    sustain: 0,
+                    release: 0.2
+                }
+            }).toDestination();
             
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
@@ -140,6 +162,7 @@
             }
 
             Firework.prototype.explode = function() {
+                fireworkExplosionSynth.triggerAttackRelease(["C5", "E5", "G5", "C6"], "8n");
                 for (let i = 0; i < particleCount; i++) {
                     this.particles.push(new Particle(this.x, this.y, this.hue));
                 }
@@ -184,10 +207,15 @@
             }
 
             function createFirework(e) {
+                if (!isStarted) {
+                    Tone.start();
+                    isStarted = true;
+                }
                 const targetX = e.clientX;
                 const targetY = e.clientY;
                 const startX = canvas.width / 2;
                 const startY = canvas.height;
+                fireworkLaunchSynth.triggerAttackRelease("C3", "4n");
                 fireworks.push(new Firework(startX, startY, targetX, targetY));
             }
 
