@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8ball</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(63,94,251,0.2) 0%, rgba(252,70,107,0) 70%);
+            z-index: 0;
+            animation: pulse 15s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .container {
+            z-index: 10;
+        }
+
+        .magic-ball-container {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #4b4b5c, #2c2c3e);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(255, 255, 255, 0.1), inset 0 0 100px rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .magic-ball-container:hover {
+            transform: scale(1.05);
+        }
+
+        .display-window {
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1), 0 0 10px #4a90e2;
+            transition: all 0.5s ease-in-out;
+            border: 2px solid #4a90e2;
+        }
+
+        .display-text {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #4a90e2;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .shaking {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4 relative">
+
+    <a href="index.html" class="absolute top-4 left-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-colors">
+        &larr; main screen
+    </a>
+
+    <div class="container max-w-sm w-full mx-auto p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 text-center space-y-6">
+        <div class="space-y-2">
+            <h1 class="text-3xl sm:text-4xl font-bold font-['Orbitron'] text-purple-400">8ball</h1>
+            <p class="text-gray-300">ask a yes/no question, then click the ball</p>
+        </div>
+
+        <div id="magicBallContainer" class="magic-ball-container mx-auto">
+            <div id="displayWindow" class="display-window">
+                <span id="displayText" class="display-text text-xl">8</span>
+            </div>
+        </div>
+
+        <p id="message" class="text-sm text-gray-400"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const answers = [
+                "It is certain.",
+                "It is decidedly so.",
+                "Without a doubt.",
+                "Yes, definitely.",
+                "You may rely on it.",
+                "As I see it, yes.",
+                "Most likely.",
+                "Outlook good.",
+                "Yes.",
+                "Signs point to yes.",
+                "Reply hazy, try again.",
+                "Ask again later.",
+                "Better not tell you now.",
+                "Cannot predict now.",
+                "Concentrate and ask again.",
+                "Don't count on it.",
+                "My reply is no.",
+                "My sources say no.",
+                "Outlook not so good.",
+                "Very doubtful."
+            ];
+
+            const magicBallContainer = document.getElementById('magicBallContainer');
+            const displayWindow = document.getElementById('displayWindow');
+            const displayText = document.getElementById('displayText');
+            const messageEl = document.getElementById('message');
+
+            magicBallContainer.addEventListener('click', () => {
+                magicBallContainer.classList.add('shaking');
+                displayText.classList.remove('visible');
+                messageEl.textContent = 'shaking';
+
+                setTimeout(() => {
+                    magicBallContainer.classList.remove('shaking');
+                    const randomIndex = Math.floor(Math.random() * answers.length);
+                    const randomAnswer = answers[randomIndex];
+
+                    displayText.textContent = randomAnswer;
+                    displayText.classList.add('visible');
+                    messageEl.textContent = 'answer approved?';
+                }, 1000);
+            });
+        });
+    </script>
+
+</body>
+</html>
