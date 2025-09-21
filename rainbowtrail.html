@@ -14,9 +14,29 @@
         canvas {
             display: block;
         }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #111;
+            text-decoration: none;
+            font-family: sans-serif;
+            border-radius: 8px;
+            border: 2px solid #fff;
+            transition: all 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: transparent;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
+    <a href="index.html" class="home-button">Back to Home</a>
     <canvas id="funCanvas"></canvas>
 
     <script>
